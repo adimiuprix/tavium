@@ -1,11 +1,11 @@
 import Image from "next/image";
+import { TaskDrawer } from "@/components/TaskDrawer";
 
 export default function Home() {
   return (
     <>
-      <div className="bg-lime-200 h-screen relative">
+      <div className="bg-lime-200 h-screen bg-gradient-to-b from-[#F7FFEB] via-[#E4FFBE] to-[#79B22A] fixed z-0 left-0 right-0 bottom-0 top-0 max-w-md mx-auto">
         <div className="px-4 pt-4">
-
             <div className="flex flex-col p-5 rounded-t-lg bg-blue-500 font-montserrat text-black">
               <div className="my-4 flex justify-center">
                 <div className="flex h-[125px] w-[148px] justify-center">
@@ -13,9 +13,7 @@ export default function Home() {
                 </div>
               </div>
               <div className="flex flex-wrap justify-center pl-1 text-4xl font-bold">
-                <div>25,740</div>
-                <div>.</div>
-                <div className="min-w-[5.5rem] text-[2rem] opacity-40">6213</div>
+                25740
               </div>
 
               <p className="mt-1 text-center text-2xl font-bold">POINT</p>
@@ -26,53 +24,35 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="flex flex-col gap-8">
-              <div className="bg-black items-center text-white justify-between gap-6 p-5 rounded-tl-lg rounded-tr-lg mt-2">
-                <span>Introducing the MVL Token!</span>
-                <span>Introducing the MVL Token!</span>
-              </div>
-            </div>
-            <div className="flex flex-col gap-8">
-              <div className="bg-black items-center text-white justify-between gap-6 p-5 rounded-tl-lg rounded-tr-lg mt-2">
-                <span>Introducing the MVL Token!</span>
-                <span>Introducing the MVL Token!</span>
-              </div>
-            </div>
-            <div className="flex flex-col gap-8">
-              <div className="bg-black items-center text-white justify-between gap-6 p-5 rounded-tl-lg rounded-tr-lg mt-2">
-                <span>Introducing the MVL Token!</span>
-                <span>Introducing the MVL Token!</span>
-              </div>
-            </div>
-            <div className="flex flex-col gap-8">
-              <div className="bg-black items-center text-white justify-between gap-6 p-5 rounded-tl-lg rounded-tr-lg mt-2">
-                <span>Introducing the MVL Token!</span>
-                <span>Introducing the MVL Token!</span>
-              </div>
-            </div>
-            <div className="flex flex-col gap-8">
-              <div className="bg-black items-center text-white justify-between gap-6 p-5 rounded-tl-lg rounded-tr-lg mt-2">
-                <span>Introducing the MVL Token!</span>
-                <span>Introducing the MVL Token!</span>
-              </div>
-            </div>
-            <div className="flex flex-col gap-8">
-              <div className="bg-black items-center text-white justify-between gap-6 p-5 rounded-tl-lg rounded-tr-lg mt-2">
-                <span>Introducing the MVL Token!</span>
-                <span>Introducing the MVL Token!</span>
-              </div>
-            </div>
-            <div className="flex flex-col gap-8">
-              <div className="bg-black items-center text-white justify-between gap-6 p-5 rounded-tl-lg rounded-tr-lg mt-2">
-                <span>Introducing the MVL Token!</span>
-                <span>Introducing the MVL Token!</span>
-              </div>
-            </div>
-            <div className="flex flex-col gap-8">
-              <div className="bg-black items-center text-white justify-between gap-6 p-5 rounded-tl-lg rounded-tr-lg mt-2">
-                <span>Introducing the MVL Token!</span>
-                <span>Introducing the MVL Token!</span>
-              </div>
+            <div class="rounded-t-2xl bg-blue-500 p-4">
+                <div class="py-3">
+                    <div class="flex gap-2">
+                        <div class="text-[15px] font-bold text-white">Tasks</div>
+                    </div>
+
+                    <div class="max-h-svh overflow-y-auto flex-grow py-2">
+                        <div class="space-y-2 mb-28">
+                            <TaskDrawer title={'Tugas 1'}/>
+                            <TaskDrawer title={'Tugas 2'}/>
+                            <TaskDrawer title={'Tugas 3'}/>
+                            <TaskDrawer title={'Tugas 4'}/>
+                            <TaskDrawer title={'Tugas 5'}/>
+                            <TaskDrawer title={'Tugas 6'}/>
+                            <TaskDrawer title={'Tugas 1'}/>
+                            <TaskDrawer title={'Tugas 2'}/>
+                            <TaskDrawer title={'Tugas 3'}/>
+                            <TaskDrawer title={'Tugas 4'}/>
+                            <TaskDrawer title={'Tugas 5'}/>
+                            <TaskDrawer title={'Tugas 6'}/>
+                            <TaskDrawer title={'Tugas 1'}/>
+                            <TaskDrawer title={'Tugas 2'}/>
+                            <TaskDrawer title={'Tugas 3'}/>
+                            <TaskDrawer title={'Tugas 4'}/>
+                            <TaskDrawer title={'Tugas 5'}/>
+                            <TaskDrawer title={'Tugas 6'}/>
+                        </div>
+                    </div>
+                </div>
             </div>
 
         </div>

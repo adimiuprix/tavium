@@ -25,3 +25,12 @@ body {
     text-wrap: balance;
   }
 }
+
+.overflow-y-auto {
+  scrollbar-width: none; /* Firefox */
+}
+
+.overflow-y-auto::-webkit-scrollbar {
+  display: none; /* Safari dan Chrome */
+}
+

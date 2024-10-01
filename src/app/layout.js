@@ -1,7 +1,7 @@
 import localFont from "next/font/local";
-import "./globals.css";
 import Image from "next/image";
 import Link from "next/link";
+import "./globals.css";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -22,15 +22,19 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={`max-w-screen-sm mx-auto bg-gray-800 ${geistSans.variable} ${geistMono.variable} antialiased`}>
+      <body className={`h-screen max-w-screen mx-auto bg-gray-800 antialiased ${geistSans.variable} ${geistMono.variable}`}>
         {children}
-
         <div className="fixed flex w-full bottom-0 left-0 justify-around bg-blue-500 py-2 gap-3 text-white">
-
           <span className="grid h-9 w-12 place-content-center rounded-full transition-colors bg-primary/[0.08]">
             <Link className="flex-1 flex justify-center p-2 active" href="/">
               <Image alt="icon" loading="lazy" width="25" height="25" decoding="async" data-nimg="1" src="/home.svg" />
               <span>Home</span>
+            </Link>
+          </span>
+          <span className="grid h-9 w-12 place-content-center rounded-full transition-colors bg-primary/[0.08]">
+            <Link className="flex-1 flex justify-center p-2 active" href="/task">
+              <Image alt="icon" loading="lazy" width="25" height="25" decoding="async" data-nimg="1" src="/home.svg" />
+              <span>Task</span>
             </Link>
           </span>
           <span className="grid h-9 w-12 place-content-center rounded-full transition-colors bg-primary/[0.08]">
@@ -39,13 +43,6 @@ export default function RootLayout({ children }) {
               <span>Home</span>
             </Link>
           </span>
-          <span className="grid h-9 w-12 place-content-center rounded-full transition-colors bg-primary/[0.08]">
-            <Link className="flex-1 flex justify-center p-2 active" href="/">
-              <Image alt="icon" loading="lazy" width="25" height="25" decoding="async" data-nimg="1" src="/home.svg" />
-              <span>Home</span>
-            </Link>
-          </span>
-
         </div>
       </body>
     </html>
