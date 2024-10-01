@@ -1,17 +1,24 @@
 "use client"
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import { useState, useEffect } from 'react';
 import Image from "next/image";
 import { TaskDrawer } from "@/components/TaskDrawer";
 
 export default function Home() {
-  const [balance, setBalance] = useState(0.00000000);
+
+  const [balance, setBalance] = useState(0)
+  const speed = 0.00000500; // speed per detik
+
   useEffect(() => {
     const interval = setInterval(() => {
-      setBalance((prevBalance) => prevBalance + 0.00000100);
-    }, 1000);
-
-    return () => clearInterval(interval);
-  }, []);
+      setBalance(prevBalance => {
+        const newBalance = prevBalance + speed;
+        console.log(newBalance.toFixed(8))
+        return newBalance;
+      });
+    }, 1000)
+    return () => clearInterval(interval)
+  }, [])
 
   return (
     <>
