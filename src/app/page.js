@@ -1,7 +1,18 @@
+"use client"
+import React, { useState, useEffect } from 'react';
 import Image from "next/image";
 import { TaskDrawer } from "@/components/TaskDrawer";
 
 export default function Home() {
+  const [balance, setBalance] = useState(0.00000000);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setBalance((prevBalance) => prevBalance + 0.00000100);
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <>
       <div className="bg-lime-200 h-screen bg-gradient-to-b from-[#F7FFEB] via-[#E4FFBE] to-[#79B22A] fixed z-0 left-0 right-0 bottom-0 top-0 max-w-md mx-auto">
@@ -13,7 +24,7 @@ export default function Home() {
                 </div>
               </div>
               <div className="flex flex-wrap justify-center pl-1 text-4xl font-bold">
-                25740
+                {balance.toFixed(8)}
               </div>
 
               <p className="mt-1 text-center text-2xl font-bold">POINT</p>
