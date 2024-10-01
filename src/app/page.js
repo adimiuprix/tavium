@@ -3,17 +3,22 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import Image from "next/image";
 import { TaskDrawer } from "@/components/TaskDrawer";
+import { updateUserBalance } from './api/userUpdateBalance/route';
+import moment from 'moment';
 
 export default function Home() {
-
+  const [time, setTime] = useState('');
   const [balance, setBalance] = useState(0)
   const speed = 0.00000500; // speed per detik
 
   useEffect(() => {
     const interval = setInterval(() => {
+      const currentTime = moment().format('YYYY-MM-DD HH:mm:ss');
+      setTime(currentTime);
+
       setBalance(prevBalance => {
         const newBalance = prevBalance + speed;
-        console.log(newBalance.toFixed(8))
+        updateUserBalance(newBalance);
         return newBalance;
       });
     }, 1000)
