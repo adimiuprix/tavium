@@ -1,5 +1,7 @@
 import localFont from "next/font/local";
 import "./globals.css";
+import Image from "next/image";
+import Link from "next/link";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -23,13 +25,27 @@ export default function RootLayout({ children }) {
       <body className={`max-w-screen-sm mx-auto bg-gray-800 ${geistSans.variable} ${geistMono.variable} antialiased`}>
         {children}
 
-        <div className="fixed bottom-0 left-0 flex w-full justify-around bg-blue-500 py-2 text-white">
-          <a className="grid justify-items-center gap-0.5 p-2 text-lg font-medium transition-opacity opacity-100 hover:bg-gray-100 rounded-full" href="/">
-            <span className="grid h-9 w-12 place-content-center rounded-full transition-colors bg-primary/[0.08]">
-              <img alt="icon" loading="lazy" width="25" height="25" decoding="async" data-nimg="1" src="/navlink/home-icon.svg" />
-            </span>
-            <span>Home</span>
-          </a>
+        <div className="fixed flex w-full bottom-0 left-0 justify-around bg-blue-500 py-2 gap-3 text-white">
+
+          <span className="grid h-9 w-12 place-content-center rounded-full transition-colors bg-primary/[0.08]">
+            <Link className="flex-1 flex justify-center p-2 active" href="/">
+              <Image alt="icon" loading="lazy" width="25" height="25" decoding="async" data-nimg="1" src="/home.svg" />
+              <span>Home</span>
+            </Link>
+          </span>
+          <span className="grid h-9 w-12 place-content-center rounded-full transition-colors bg-primary/[0.08]">
+            <Link className="flex-1 flex justify-center p-2 active" href="/">
+              <Image alt="icon" loading="lazy" width="25" height="25" decoding="async" data-nimg="1" src="/home.svg" />
+              <span>Home</span>
+            </Link>
+          </span>
+          <span className="grid h-9 w-12 place-content-center rounded-full transition-colors bg-primary/[0.08]">
+            <Link className="flex-1 flex justify-center p-2 active" href="/">
+              <Image alt="icon" loading="lazy" width="25" height="25" decoding="async" data-nimg="1" src="/home.svg" />
+              <span>Home</span>
+            </Link>
+          </span>
+
         </div>
       </body>
     </html>
