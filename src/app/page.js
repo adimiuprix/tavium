@@ -1,14 +1,13 @@
 "use client"
-import React from 'react';
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import Image from "next/image";
+import moment from 'moment';
 import { TaskDrawer } from "@/components/TaskDrawer";
 import { updateUserBalance } from './api/userUpdateBalance/route';
-import moment from 'moment';
 
 export default function Home() {
-  const [time, setTime] = useState('');
-  const [balance, setBalance] = useState(0)
+  const [time, setTime] = useState();
+  const [balance, setBalance] = useState(0);
   const speed = 0.00000500; // speed per detik
 
   useEffect(() => {
@@ -18,12 +17,36 @@ export default function Home() {
 
       setBalance(prevBalance => {
         const newBalance = prevBalance + speed;
-        updateUserBalance(newBalance);
+        updateUserBalance(newBalance); // Pastikan updateUserBalance meng-handle error jika diperlukan
         return newBalance;
       });
-    }, 1000)
-    return () => clearInterval(interval)
-  }, [])
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  const [user, setUser] = useState();
+  console.log(user)
+
+  useEffect(() => {
+    const fetchUserInfo = async () => {
+      try {
+        const response = await fetch('/api/userInfoDetail');
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.error || 'Unknown error');
+        }
+
+        const data = await response.json();
+        setUser(data);
+      } catch (err) {
+        console.error('Error fetching user:', err.message);
+      }
+    };
+
+    fetchUserInfo();
+  }, []);
 
   return (
     <>
@@ -47,14 +70,14 @@ export default function Home() {
               </div>
             </div>
 
-            <div class="mt-2 p-4 bg-blue-500 rounded-t-lg">
-                <div class="py-3">
-                    <div class="flex gap-2">
-                        <div class="text-[15px] font-bold text-white mb-3">Tasks</div>
+            <div className="mt-2 p-4 bg-blue-500 rounded-t-lg">
+                <div className="py-3">
+                    <div className="flex gap-2">
+                        <div className="text-[15px] font-bold text-white mb-3">Tasks</div>
                     </div>
 
-                    <div class="max-h-svh overflow-y-auto flex-grow py-2">
-                        <div class="space-y-2 mb-30">
+                    <div className="max-h-svh overflow-y-auto flex-grow py-2">
+                        <div className="space-y-2 mb-30">
                             <TaskDrawer title={'Tugas 1'}/>
                             <TaskDrawer title={'Tugas 2'}/>
                             <TaskDrawer title={'Tugas 3'}/>
