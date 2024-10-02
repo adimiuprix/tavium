@@ -3,59 +3,51 @@ import React, { useState, useEffect } from 'react';
 import Image from "next/image";
 import moment from 'moment';
 import { TaskDrawer } from "@/components/TaskDrawer";
-import { updateUserBalance } from './api/user_update_balance/route';
 
 export default function Home() {
   const [user, setUser] = useState(null);
-  const [time, setTime] = useState();
+  const mbal = parseInt(user?.balance)
+  console.log(mbal)
   const [balance, setBalance] = useState(0);
-  const speed = 0.00000500; // speed per detik
+  const speed = user?.mining_speed; // speed per detik
 
-  // Fetch user info
+  // Fetch profile info
   useEffect(() => {
     const fetchUserInfo = async () => {
-      try {
-        const response = await fetch('/api/user_info');
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        const data = await response.json();
-        setUser(data);
-      } catch (error) {
-        console.error('Error fetching user info:', error);
-        setUser({ balance: 'Error fetching data' });
+      const response = await fetch('/api/user_info');
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
       }
+
+      const data = await response.json();
+      setUser(data);
     };
     fetchUserInfo();
-  }, []);
+  }, [balance]);
 
   // balance incrementing
   useEffect(() => {
     const interval = setInterval(() => {
-      const currentTime = moment().format('YYYY-MM-DD HH:mm:ss');
-      setTime(currentTime);
-
       setBalance(prevBalance => {
-        const newBalance = prevBalance + speed;
-        updateUserBalance(newBalance);
+        const newBalance = prevBalance + parseFloat(speed); // pastikan speed adalah angka
         return newBalance;
       });
     }, 1000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [speed]);
 
   // unLoad handler
-  useEffect(() => {
-    window.addEventListener('beforeunload', () =>
-      navigator.sendBeacon('/api/user_update_last_mining', JSON.stringify({ last_mining: new Date().toISOString() }))
-    );
+  // useEffect(() => {
+  //   const currentTime = moment().format('YYYY-MM-DD HH:mm:ss');
+  //   window.addEventListener('beforeunload', () =>
+  //     navigator.sendBeacon('/api/user_update_last_mining', JSON.stringify({ last_mining: currentTime }))
+  //   );
 
-    return () => {
-      window.removeEventListener('beforeunload', () => {});
-    };
-  }, []);
-
+  //   return () => {
+  //     window.removeEventListener('beforeunload', () => {});
+  //   };
+  // }, []);
 
   return (
     <>
@@ -90,21 +82,6 @@ export default function Home() {
                             <TaskDrawer title={'Tugas 1'}/>
                             <TaskDrawer title={'Tugas 2'}/>
                             <TaskDrawer title={'Tugas 3'}/>
-                            <TaskDrawer title={'Tugas 4'}/>
-                            <TaskDrawer title={'Tugas 5'}/>
-                            <TaskDrawer title={'Tugas 6'}/>
-                            <TaskDrawer title={'Tugas 1'}/>
-                            <TaskDrawer title={'Tugas 2'}/>
-                            <TaskDrawer title={'Tugas 3'}/>
-                            <TaskDrawer title={'Tugas 4'}/>
-                            <TaskDrawer title={'Tugas 5'}/>
-                            <TaskDrawer title={'Tugas 6'}/>
-                            <TaskDrawer title={'Tugas 1'}/>
-                            <TaskDrawer title={'Tugas 2'}/>
-                            <TaskDrawer title={'Tugas 3'}/>
-                            <TaskDrawer title={'Tugas 4'}/>
-                            <TaskDrawer title={'Tugas 5'}/>
-                            <TaskDrawer title={'Tugas 6'}/>
                         </div>
                     </div>
                 </div>

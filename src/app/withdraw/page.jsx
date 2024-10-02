@@ -12,7 +12,7 @@ function Withdraw(){
                 <div className="pb-96"></div>
                 <div className="pb-20"></div>
 
-                <button class="w-full max-w-md bg-black text-white font-bold py-4 rounded-lg">
+                <button className="w-full max-w-md bg-black text-white font-bold py-4 rounded-lg">
                     <p className="text-sm font-bold text-white">Withdraw Cooming soon</p>
                 </button>
             </div>

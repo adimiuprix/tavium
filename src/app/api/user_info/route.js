@@ -3,7 +3,7 @@ import prisma from '@/lib/prisma';
 import { NextResponse } from 'next/server';
 
 export async function GET() {
-  const idTelegram = 548496;
+  const idTelegram = 5478589;
   const data = await prisma.telegram_user.findUnique({
     where: {
       telegram_id: idTelegram,
@@ -14,6 +14,7 @@ export async function GET() {
     const serializedUser = {
       ...data,
       telegram_id: data.telegram_id.toString(),
+      mining_speed: data.mining_speed.toString(),
     };
     return NextResponse.json(serializedUser, { status: 200, 'Pragma': 'no-cache', });
   } else {
