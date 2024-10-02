@@ -3,13 +3,33 @@ import React, { useState, useEffect } from 'react';
 import Image from "next/image";
 import moment from 'moment';
 import { TaskDrawer } from "@/components/TaskDrawer";
-import { updateUserBalance } from './api/userUpdateBalance/route';
+import { updateUserBalance } from './api/user_update_balance/route';
 
 export default function Home() {
+  const [user, setUser] = useState(null);
   const [time, setTime] = useState();
   const [balance, setBalance] = useState(0);
   const speed = 0.00000500; // speed per detik
 
+  // Fetch user info
+  useEffect(() => {
+    const fetchUserInfo = async () => {
+      try {
+        const response = await fetch('/api/user_info');
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        setUser(data);
+      } catch (error) {
+        console.error('Error fetching user info:', error);
+        setUser({ balance: 'Error fetching data' });
+      }
+    };
+    fetchUserInfo();
+  }, []);
+
+  // balance incrementing
   useEffect(() => {
     const interval = setInterval(() => {
       const currentTime = moment().format('YYYY-MM-DD HH:mm:ss');
@@ -17,7 +37,7 @@ export default function Home() {
 
       setBalance(prevBalance => {
         const newBalance = prevBalance + speed;
-        updateUserBalance(newBalance); // Pastikan updateUserBalance meng-handle error jika diperlukan
+        updateUserBalance(newBalance);
         return newBalance;
       });
     }, 1000);
@@ -25,28 +45,17 @@ export default function Home() {
     return () => clearInterval(interval);
   }, []);
 
-  const [user, setUser] = useState();
-  console.log(user)
-
+  // unLoad handler
   useEffect(() => {
-    const fetchUserInfo = async () => {
-      try {
-        const response = await fetch('/api/userInfoDetail');
+    window.addEventListener('beforeunload', () =>
+      navigator.sendBeacon('/api/user_update_last_mining', JSON.stringify({ last_mining: new Date().toISOString() }))
+    );
 
-        if (!response.ok) {
-          const errorData = await response.json();
-          throw new Error(errorData.error || 'Unknown error');
-        }
-
-        const data = await response.json();
-        setUser(data);
-      } catch (err) {
-        console.error('Error fetching user:', err.message);
-      }
+    return () => {
+      window.removeEventListener('beforeunload', () => {});
     };
-
-    fetchUserInfo();
   }, []);
+
 
   return (
     <>

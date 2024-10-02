@@ -7,7 +7,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model TelegramUser {
+model telegram_user {
   id              Int             @id @default(autoincrement())
   telegram_id     BigInt          @unique
   username        String?
