@@ -1,13 +1,10 @@
 "use client"
 import React, { useState, useEffect } from 'react';
 import Image from "next/image";
-import moment from 'moment';
 import { TaskDrawer } from "@/components/TaskDrawer";
 
 export default function Home() {
   const [user, setUser] = useState(null);
-  const mbal = parseInt(user?.balance)
-  console.log(mbal)
   const [balance, setBalance] = useState(0);
   const speed = user?.mining_speed; // speed per detik
 
@@ -29,7 +26,7 @@ export default function Home() {
   useEffect(() => {
     const interval = setInterval(() => {
       setBalance(prevBalance => {
-        const newBalance = prevBalance + parseFloat(speed); // pastikan speed adalah angka
+        const newBalance = prevBalance + parseFloat(speed);
         return newBalance;
       });
     }, 1000);
@@ -40,8 +37,8 @@ export default function Home() {
   // unLoad handler
   useEffect(() => {
     const handleBeforeUnload = () => {
-      const currentTime = moment().format('YYYY-MM-DD HH:mm:ss');
-      navigator.sendBeacon('/api/user_update_last_mining', JSON.stringify({ last_mining: currentTime }));
+      navigator.sendBeacon('/api/user_update_last_mining');
+      navigator.sendBeacon('/api/update_balance_onclose');
     };
 
     window.addEventListener('beforeunload', handleBeforeUnload);
@@ -68,8 +65,8 @@ export default function Home() {
               <p className="mt-1 text-center text-2xl font-bold">POINT</p>
 
               <div className="bg-black mx-2 mt-2 flex items-center justify-between rounded-lg px-4 py-3">
-                <p className="text-sm font-bold text-white">APY - 100%</p>
-                <p className="text-sm font-bold text-white">0.00000000 per second</p>
+                <p className="text-sm font-bold text-white">Speed mining:</p>
+                <p className="text-sm font-bold text-white">{speed} per second</p>
               </div>
             </div>
 
