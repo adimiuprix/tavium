@@ -1,12 +1,21 @@
 "use client"
 import React, { useState, useEffect } from 'react';
 import Image from "next/image";
+import moment from 'moment';
 import { TaskDrawer } from "@/components/TaskDrawer";
 
 export default function Home() {
-  const [user, setUser] = useState(null);
-  const speed = user?.mining_speed; // speed per detik
-  const [balance, setBalance] = useState(0);
+  const [user, setUser] = useState(null); // define variable user state
+  const speed = user?.mining_speed; // speed per second
+  const [balance, setBalance] = useState(0);  // balance
+
+  const balanceUserNow = user?.balance;   // balance user from database
+  const lastMining = user?.last_mining; // last mining time from database
+  const timeNow = moment(); // time now
+  const diffInSeconds = timeNow.diff(lastMining, 'seconds');  // distance between timenow - last_time (second)
+  const balanceTime = diffInSeconds * speed // result from "diffInSeconds" * mining speed
+  const currentBalance = balanceUserNow + balanceTime || 0
+  console.log(diffInSeconds)
 
   // Fetch profile info
   useEffect(() => {
@@ -22,11 +31,22 @@ export default function Home() {
     fetchUserInfo();
   }, []);
 
+  const sendBalanceNowToAPI = async (newBalance) => {
+    await fetch('/api/send_balance', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ balance: newBalance }),
+    });
+  };
+
   // balance incrementing
   useEffect(() => {
     const interval = setInterval(() => {
       setBalance(prevBalance => {
-        const newBalance = prevBalance + parseFloat(speed);
+        const newBalance = prevBalance + parseFloat(speed) || 0;
+        sendBalanceNowToAPI(newBalance);
         return newBalance;
       });
     }, 1000);
@@ -37,9 +57,8 @@ export default function Home() {
   // unLoad handler
   useEffect(() => {
     const handleBeforeUnload = () => {
-      const newBalance = {"balance" : balance}
       navigator.sendBeacon('/api/user_update_last_mining');
-      navigator.sendBeacon('/api/update_balance_onclose', JSON.stringify(newBalance));
+      navigator.sendBeacon('/api/update_balance_onclose');
     };
 
     window.addEventListener('beforeunload', handleBeforeUnload);
@@ -60,7 +79,7 @@ export default function Home() {
                 </div>
               </div>
               <div className="flex flex-wrap justify-center pl-1 text-4xl font-bold">
-                {balance.toFixed(8)}
+                {currentBalance}
               </div>
 
               <p className="mt-1 text-center text-2xl font-bold">POINT</p>
