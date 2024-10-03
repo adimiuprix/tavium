@@ -38,16 +38,18 @@ export default function Home() {
   }, [speed]);
 
   // unLoad handler
-  // useEffect(() => {
-  //   const currentTime = moment().format('YYYY-MM-DD HH:mm:ss');
-  //   window.addEventListener('beforeunload', () =>
-  //     navigator.sendBeacon('/api/user_update_last_mining', JSON.stringify({ last_mining: currentTime }))
-  //   );
+  useEffect(() => {
+    const handleBeforeUnload = () => {
+      const currentTime = moment().format('YYYY-MM-DD HH:mm:ss');
+      navigator.sendBeacon('/api/user_update_last_mining', JSON.stringify({ last_mining: currentTime }));
+    };
 
-  //   return () => {
-  //     window.removeEventListener('beforeunload', () => {});
-  //   };
-  // }, []);
+    window.addEventListener('beforeunload', handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, []);
 
   return (
     <>
