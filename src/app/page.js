@@ -14,8 +14,7 @@ export default function Home() {
   const timeNow = moment(); // time now
   const diffInSeconds = timeNow.diff(lastMining, 'seconds');  // distance between timenow - last_time (second)
   const balanceTime = diffInSeconds * speed // result from "diffInSeconds" * mining speed
-  const currentBalance = balanceUserNow + balanceTime || 0
-  console.log(diffInSeconds)
+  const balanceOnLoad = balanceUserNow + balanceTime || 0
 
   // Fetch profile info
   useEffect(() => {
@@ -44,8 +43,8 @@ export default function Home() {
   // balance incrementing
   useEffect(() => {
     const interval = setInterval(() => {
-      setBalance(prevBalance => {
-        const newBalance = prevBalance + parseFloat(speed) || 0;
+      setBalance(balanceOnLoad => {
+        const newBalance = balanceOnLoad + parseFloat(speed) || 0;
         sendBalanceNowToAPI(newBalance);
         return newBalance;
       });
@@ -79,7 +78,7 @@ export default function Home() {
                 </div>
               </div>
               <div className="flex flex-wrap justify-center pl-1 text-4xl font-bold">
-                {currentBalance}
+                {balanceOnLoad.toLocaleString()}
               </div>
 
               <p className="mt-1 text-center text-2xl font-bold">POINT</p>

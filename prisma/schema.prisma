@@ -13,8 +13,8 @@ model telegram_user {
   username        String?
   firstname       String?
   lastname        String?
-  balance         Decimal         @db.Decimal(20, 8) @default(0.00000000)
-  mining_speed    Decimal?        @db.Decimal(20, 8) @default(0.00000000)
+  balance         Int             @default(0)
+  mining_speed    Int?            @default(0)
   last_mining     DateTime?       @default(now())
-  createdAt       DateTime        @default(now())
+  created_at      DateTime        @default(now())
 }
