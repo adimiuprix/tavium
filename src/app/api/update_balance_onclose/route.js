@@ -5,9 +5,8 @@ import path from 'path';
 export async function POST(request) {
     const data = await request.json();
     const filePath = path.join(process.cwd(), 'data.json');
-    const print = {"data" : data}
 
-    await fs.writeFile(filePath, JSON.stringify(print, null, 2));
+    await fs.writeFile(filePath, JSON.stringify(data, null, 2));
 
     return NextResponse.json({
         status: 200

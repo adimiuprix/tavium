@@ -5,8 +5,8 @@ import { TaskDrawer } from "@/components/TaskDrawer";
 
 export default function Home() {
   const [user, setUser] = useState(null);
-  const [balance, setBalance] = useState(0);
   const speed = user?.mining_speed; // speed per detik
+  const [balance, setBalance] = useState(0);
 
   // Fetch profile info
   useEffect(() => {
@@ -20,7 +20,7 @@ export default function Home() {
       setUser(data);
     };
     fetchUserInfo();
-  }, [balance]);
+  }, []);
 
   // balance incrementing
   useEffect(() => {
@@ -37,8 +37,9 @@ export default function Home() {
   // unLoad handler
   useEffect(() => {
     const handleBeforeUnload = () => {
+      const newBalance = {"balance" : balance}
       navigator.sendBeacon('/api/user_update_last_mining');
-      navigator.sendBeacon('/api/update_balance_onclose');
+      navigator.sendBeacon('/api/update_balance_onclose', JSON.stringify(newBalance));
     };
 
     window.addEventListener('beforeunload', handleBeforeUnload);
