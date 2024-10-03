@@ -43,8 +43,8 @@ export default function Home() {
   // balance incrementing
   useEffect(() => {
     const interval = setInterval(() => {
-      setBalance(balanceOnLoad => {
-        const newBalance = balanceOnLoad + parseFloat(speed) || 0;
+      setBalance(prevBalance => {
+        const newBalance = prevBalance + parseFloat(speed) || 0;
         sendBalanceNowToAPI(newBalance);
         return newBalance;
       });
@@ -78,7 +78,7 @@ export default function Home() {
                 </div>
               </div>
               <div className="flex flex-wrap justify-center pl-1 text-4xl font-bold">
-                {balanceOnLoad.toLocaleString()}
+                {balance.toString()}
               </div>
 
               <p className="mt-1 text-center text-2xl font-bold">POINT</p>

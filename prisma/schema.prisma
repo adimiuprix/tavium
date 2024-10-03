@@ -18,3 +18,26 @@ model telegram_user {
   last_mining     DateTime?       @default(now())
   created_at      DateTime        @default(now())
 }
+
+model task {
+  id                  Int                     @id @default(autoincrement())
+  title               String                  @unique
+  description         String?
+  reward              Int?
+  type                String?
+  action_name         String?
+  link                String?
+  created_at          DateTime                @default(now())
+  telegramUserTasks   telegram_user_task[]
+}
+
+model telegram_user_task {
+  id              Int             @id @default(autoincrement())
+  telegram_id     BigInt
+  task_id         Int
+  task            task            @relation(fields: [task_id], references: [id])
+  is_submited     Boolean
+  is_rewarded     Boolean
+  submited_at     DateTime?       @default(now())
+  created_at      DateTime        @default(now())
+}
